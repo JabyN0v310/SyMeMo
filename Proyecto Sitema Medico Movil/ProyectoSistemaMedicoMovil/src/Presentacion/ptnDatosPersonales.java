@@ -1,4 +1,4 @@
-package Presentacion;
+package Presentaciones;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
