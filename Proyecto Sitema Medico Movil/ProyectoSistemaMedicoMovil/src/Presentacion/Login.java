@@ -1,12 +1,13 @@
 package Presentacion;
 
-import java.awt.BorderLayout;
+//import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
@@ -14,19 +15,26 @@ import java.awt.Color;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.border.TitledBorder;
+//import javax.swing.border.TitledBorder;
+
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+//import java.awt.GridBagLayout;
+//import java.awt.GridBagConstraints;
+//import java.awt.Insets;
+
 
 import javax.swing.JPasswordField;
+
+//import com.sun.awt.AWTUtilities;
+
 
 import Negocio.NegocioFrmLogin;
 
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 public class Login extends JFrame {
@@ -55,57 +63,73 @@ public class Login extends JFrame {
 		setBounds(100, 100, 450, 300);
 		setLocationRelativeTo(null);
 		setIconImage(new ImageIcon(getClass().getResource("/img/icono.png")).getImage());
+		//quitar el boton de maximizar/minimizar
 		setResizable(false);
+		
+		//Pero aqui le quitamos los botones de la ventana >:D
+		setUndecorated(true);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Login", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBackground(Color.ORANGE);
-		contentPane.add(panel, BorderLayout.CENTER);
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{76, 48, 73, 89, 0};
-		gbl_panel.rowHeights = new int[]{63, 0, 20, 20, 69, 23, 0};
-		gbl_panel.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel.setLayout(gbl_panel);
+		//Con esto dejamos transparente el panel de jframe :D
+		setBackground(new Color(0,0,0,0));
+				
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
+		lblUsuario.setBounds(183, 165, 49, 15);
+		contentPane.add(lblUsuario);
 		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 12));
-		GridBagConstraints gbc_lblUsuario = new GridBagConstraints();
-		gbc_lblUsuario.anchor = GridBagConstraints.EAST;
-		gbc_lblUsuario.insets = new Insets(0, 0, 5, 5);
-		gbc_lblUsuario.gridx = 0;
-		gbc_lblUsuario.gridy = 2;
-		panel.add(lblUsuario, gbc_lblUsuario);
 		
 		txtUsuario = new JTextField();
-		GridBagConstraints gbc_txtUsuario = new GridBagConstraints();
-		gbc_txtUsuario.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtUsuario.insets = new Insets(0, 0, 5, 5);
-		gbc_txtUsuario.gridx = 1;
-		gbc_txtUsuario.gridy = 2;
-		panel.add(txtUsuario, gbc_txtUsuario);
+		txtUsuario.setBounds(237, 163, 161, 20);
+		contentPane.add(txtUsuario);
 		txtUsuario.setColumns(10);
 		
 		JLabel lblContrasenia = new JLabel("Contrase\u00F1a:");
+		lblContrasenia.setBounds(158, 190, 74, 15);
+		contentPane.add(lblContrasenia);
 		lblContrasenia.setFont(new Font("Tahoma", Font.BOLD, 12));
-		GridBagConstraints gbc_lblContrasenia = new GridBagConstraints();
-		gbc_lblContrasenia.anchor = GridBagConstraints.EAST;
-		gbc_lblContrasenia.insets = new Insets(0, 0, 5, 5);
-		gbc_lblContrasenia.gridx = 0;
-		gbc_lblContrasenia.gridy = 3;
-		panel.add(lblContrasenia, gbc_lblContrasenia);
 		
-		JButton btnAceptar = new JButton("Ingresar");
+		txtContrasenia = new JPasswordField();
+
+		txtContrasenia.setBounds(237, 188, 161, 20);
+		contentPane.add(txtContrasenia);
+		
+		final JButton btnAceptar = new JButton("Ingresar");
+		btnAceptar.setBounds(136, 228, 82, 23);
+		contentPane.add(btnAceptar);
+		
+		JButton btnRegistarse = new JButton("Registarse");
+		btnRegistarse.setBounds(228, 228, 101, 23);
+		contentPane.add(btnRegistarse);
+		
+		JButton btnSalir = new JButton("Salir");
+		btnSalir.setBounds(339, 228, 89, 23);
+		contentPane.add(btnSalir);
+		
+		
+		
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+				
+			}
+		});
+		btnRegistarse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+			new Registro();
+			//hide();
+			}
+		});
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				
 				String usuario=txtUsuario.getText();
 				String contrasenia = txtContrasenia.getText();
 				
+				//Comparacion de prueba Sin conexion a la base de datos
 				if(usuario.isEmpty() || contrasenia.isEmpty()){
 					JOptionPane.showMessageDialog(null, "Algun campo esta vacio");
 
@@ -122,8 +146,9 @@ public class Login extends JFrame {
 				}
 				
 			//Prueba Base de datos Usuario
-				/*if(NegocioFrmLogin.Login(txtUsuario.getText(), txtContrasenia.getText())){
-					
+			/*	if(NegocioFrmLogin.Login(txtUsuario.getText(), txtContrasenia.getText())){
+					JOptionPane.showMessageDialog(null, "Bienvenido");
+					 mp = new MenuPrincipal();
 					dispose();
 				}else{
 					JOptionPane.showMessageDialog(null, "Usuario o Contraseña Incorrecto");
@@ -137,47 +162,26 @@ public class Login extends JFrame {
 			
 			
 		});
-		
-		txtContrasenia = new JPasswordField();
-		GridBagConstraints gbc_txtContrasenia = new GridBagConstraints();
-		gbc_txtContrasenia.insets = new Insets(0, 0, 5, 5);
-		gbc_txtContrasenia.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtContrasenia.gridx = 1;
-		gbc_txtContrasenia.gridy = 3;
-		panel.add(txtContrasenia, gbc_txtContrasenia);
-		GridBagConstraints gbc_btnAceptar = new GridBagConstraints();
-		gbc_btnAceptar.anchor = GridBagConstraints.NORTHEAST;
-		gbc_btnAceptar.insets = new Insets(0, 0, 0, 5);
-		gbc_btnAceptar.gridwidth = 2;
-		gbc_btnAceptar.gridx = 0;
-		gbc_btnAceptar.gridy = 5;
-		panel.add(btnAceptar, gbc_btnAceptar);
-		
-		JButton btnSalir = new JButton("Salir");
-		btnSalir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
-				
+		txtContrasenia.addKeyListener(new KeyAdapter() {
+		//Action para cuando se oprima enter desde el txtcontrasenia accionando el boton
+			public void keyPressed(KeyEvent e) {
+				 if  ( e . getKeyCode ()== KeyEvent . VK_ENTER ){ 
+				        System.out.println( "Oprimistes Enter :O" ); 
+				        SwingUtilities.getRootPane(btnAceptar).setDefaultButton(btnAceptar);
+				       // rootPane.setDefaultButton(btnAceptar);  
+				 } 
 			}
 		});
 		
-		JButton btnRegistarse = new JButton("Registarse");
-		btnRegistarse.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-			new Registro();
-			//hide();
-			}
-		});
-		GridBagConstraints gbc_btnRegistarse = new GridBagConstraints();
-		gbc_btnRegistarse.insets = new Insets(0, 0, 0, 5);
-		gbc_btnRegistarse.gridx = 2;
-		gbc_btnRegistarse.gridy = 5;
-		panel.add(btnRegistarse, gbc_btnRegistarse);
-		GridBagConstraints gbc_btnSalir = new GridBagConstraints();
-		gbc_btnSalir.anchor = GridBagConstraints.NORTH;
-		gbc_btnSalir.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnSalir.gridx = 3;
-		gbc_btnSalir.gridy = 5;
-		panel.add(btnSalir, gbc_btnSalir);
+		//Imagen de fondo :p
+		JLabel label = new JLabel("");
+		label.setBounds(0, 5, 449, 269);
+		contentPane.add(label);
+		label.setIcon(new ImageIcon(Login.class.getResource("/img/Login3.png")));
 	}
+	/*Metodo Para hacer el JFrame Transparente
+	 * public static void transparencia(JFrame frm){
+		AWTUtilities.setWindowOpaque(frm, false);
+		
+	}*/
 }
