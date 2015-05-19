@@ -33,7 +33,7 @@ public class MenuPrincipal extends JFrame {
 	private JPanel contentPane;
 	JList list;
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -44,7 +44,7 @@ public class MenuPrincipal extends JFrame {
 				}
 			}
 		});
-	}*/
+	}
 
 
 	public MenuPrincipal() {
@@ -63,7 +63,7 @@ public class MenuPrincipal extends JFrame {
 		list.setToolTipText("Opciones");
 		list.setBackground(new Color(255, 255, 255));
 		list.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
-		list.setBounds(99, 51, 188, 166);
+		list.setBounds(147, 61, 127, 166);
 		list.setModel(new AbstractListModel() {
 			String[] values = new String[] {"Pacientes", "Agenda", "Medicina"};
 			public int getSize() {
@@ -101,13 +101,17 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		btnAceptar.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnAceptar.setBounds(147, 246, 89, 23);
+		btnAceptar.setBounds(162, 256, 89, 23);
 		contentPane.add(btnAceptar);
 		
-		JLabel lblBienvenidoDoctor = new JLabel("Bienvenido Doctor");
+		JLabel lblBienvenidoDoctor = new JLabel("");
 		lblBienvenidoDoctor.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblBienvenidoDoctor.setBounds(99, 0, 200, 50);
 		contentPane.add(lblBienvenidoDoctor);
+		JLabel label = new JLabel("");
+		label.setBounds(0, 0, 409, 319);
+		contentPane.add(label);
+		label.setIcon(new ImageIcon(Login.class.getResource("/img/Menu_Principal.png")));	
 	setVisible(true);
 	}
 }
