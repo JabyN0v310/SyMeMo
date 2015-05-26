@@ -1,20 +1,14 @@
 package Presentacion;
 
 import java.awt.EventQueue;
-import java.util.List;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import Encapsulamiento.TMedicamento;
-import Negocio.NegocioFrmConsultarMedicamento;
-import javax.swing.event.InternalFrameAdapter;
-import javax.swing.event.InternalFrameEvent;
-
 public class frmConsultarMedicamento extends JInternalFrame {
-	private JTable tablaDatos;
+	private JTable table;
 
 
 	public static void main(String[] args) {
@@ -31,12 +25,6 @@ public class frmConsultarMedicamento extends JInternalFrame {
 	}
 
 	public frmConsultarMedicamento() {
-		addInternalFrameListener(new InternalFrameAdapter() {
-			@Override
-			public void internalFrameOpened(InternalFrameEvent evt) {
-				formInternalFrameOpened(evt);
-			}
-		});
 		setMaximizable(true);
 		setIconifiable(true);
 		setClosable(true);
@@ -47,8 +35,8 @@ public class frmConsultarMedicamento extends JInternalFrame {
 		scrollPane.setBounds(20, 11, 567, 227);
 		getContentPane().add(scrollPane);
 		
-		tablaDatos = new JTable();
-		tablaDatos.setModel(new DefaultTableModel(
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null},
@@ -66,32 +54,7 @@ public class frmConsultarMedicamento extends JInternalFrame {
 				return columnEditables[column];
 			}
 		});
-		scrollPane.setViewportView(tablaDatos);
+		scrollPane.setViewportView(table);
 
 	}
-	
-	 private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-	        List<TMedicamento> listaTMedicamento=NegocioFrmConsultarMedicamento.GetByAll();
-	        
-	        DefaultTableModel modeloTabla=(DefaultTableModel)tablaDatos.getModel();
-	        
-	        for (TMedicamento tMedicamento : listaTMedicamento) 
-	        {
-	            Object[] datosFila=
-	            {
-	            		tMedicamento.getCodMedicamento(),
-	            		tMedicamento.getUsuario(),
-	            		tMedicamento.getNombre(),
-	            		tMedicamento.getPrecioCompra(),
-	            		tMedicamento.getPrecioVenta(),
-	            		tMedicamento.getFechaVencimiento(),
-	            		tMedicamento.getCantidad()
-	            };
-	            
-	            modeloTabla.addRow(datosFila);
-	        }
-	        
-	        tablaDatos.setModel(modeloTabla);
-	    }
-	
 }
