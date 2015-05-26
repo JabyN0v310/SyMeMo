@@ -1,4 +1,4 @@
-package Presentaciones;
+package Presentacion;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -48,7 +48,7 @@ public class MenuPaciente extends JFrame
 	  //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	  //(x,y,ancho,alto)
 	  this.setBounds(250,150,700,600);
-	  setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPaciente.class.getResource("/Imagenes/icono-gran.ico")));
+	  //setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPaciente.class.getResource("/Imagenes/icono-gran.ico")));
 	 // this.setSize(700,500);
 	 // this.setLocationRelativeTo(null);
         

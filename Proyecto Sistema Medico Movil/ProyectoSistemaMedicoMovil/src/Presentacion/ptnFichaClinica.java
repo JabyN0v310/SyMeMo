@@ -1,4 +1,4 @@
-package Presentaciones;
+package Presentacion;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
