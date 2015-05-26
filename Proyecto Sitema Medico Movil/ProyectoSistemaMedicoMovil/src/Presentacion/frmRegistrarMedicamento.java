@@ -3,24 +3,14 @@ package Presentacion;
 import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
-
-import Controller.LimpiarComponentes;
-import Encapsulamiento.TMedicamento;
-import Negocio.NegocioFrmRegistrarMedicamento;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class frmRegistrarMedicamento extends JInternalFrame {
 	private JTextField txtUsuario;
@@ -52,7 +42,7 @@ public class frmRegistrarMedicamento extends JInternalFrame {
 		setBounds(100, 100, 491, 331);
 		getContentPane().setLayout(null);
 		
-		final JPanel panelRegistrarDatos = new JPanel();
+		JPanel panelRegistrarDatos = new JPanel();
 		panelRegistrarDatos.setBorder(new TitledBorder(null, "Registro", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panelRegistrarDatos.setBounds(33, 24, 420, 202);
 		getContentPane().add(panelRegistrarDatos);
@@ -159,42 +149,10 @@ public class frmRegistrarMedicamento extends JInternalFrame {
 		txtCantidad.setColumns(10);
 		
 		JButton btnRegistrar = new JButton("Registrar");
-		btnRegistrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			
-				TMedicamento tMedicamento=new TMedicamento();
-		        
-				tMedicamento.setUsuario(txtUsuario.getText());
-				tMedicamento.setNombre(txtNombre.getText());
-				tMedicamento.setPrecioCompra(Float.parseFloat(txtPrecioCompra.getText()));
-				tMedicamento.setPrecioVenta(Float.parseFloat(txtPrecioVenta.getText()));
-				tMedicamento.setFechaVencimiento(txtFechaVencimiento.getText());
-				tMedicamento.setCantidad(Integer.parseInt(txtCantidad.getText()));
-		        
-		        if(NegocioFrmRegistrarMedicamento.GetByNombre(tMedicamento.getNombre())!=null)
-		        {
-		            JOptionPane.showMessageDialog(null, "Producto Existente. No se puede registrar");
-		            return;
-		        }
-		        
-		        if(NegocioFrmRegistrarMedicamento.InsertAll(tMedicamento))
-		        {
-		            JOptionPane.showMessageDialog(null, "Producto Registrado Correctamente");
-		            LimpiarComponentes.JTextField(panelRegistrarDatos);
-		        }
-			
-		        //
-			}
-		});
 		btnRegistrar.setBounds(99, 252, 89, 23);
 		getContentPane().add(btnRegistrar);
 		
 		JButton btnSalir = new JButton("Salir");
-		btnSalir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				dispose();
-			}
-		});
 		btnSalir.setBounds(255, 252, 89, 23);
 		getContentPane().add(btnSalir);
 
