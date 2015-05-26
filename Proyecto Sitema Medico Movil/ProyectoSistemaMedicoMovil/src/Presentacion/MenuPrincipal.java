@@ -65,7 +65,7 @@ public class MenuPrincipal extends JFrame {
 		list.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
 		list.setBounds(147, 61, 127, 166);
 		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Pacientes", "Agenda", "Medicina"};
+			String[] values = new String[] {"Pacientes", "Agenda", "Medicina","Registrar paciente"};
 			public int getSize() {
 				return values.length;
 			}
@@ -95,7 +95,13 @@ public class MenuPrincipal extends JFrame {
 					System.out.println("Seleccionastes Medicinas");
 					new MDIMedicamentos();
 					list.clearSelection();
-				}else{
+				}
+				else if(list.getSelectedIndex()==3){
+					System.out.println("Seleccionastes Registrar paciente");
+					new ptnRegistroPaciente();
+					list.clearSelection();
+				}
+				else{
 					JOptionPane.showMessageDialog(null, "Selecciona un elemento de la lista","Alerta",JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
@@ -103,6 +109,20 @@ public class MenuPrincipal extends JFrame {
 		btnAceptar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnAceptar.setBounds(162, 256, 89, 23);
 		contentPane.add(btnAceptar);
+		
+		JButton btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new Login().setVisible(true);
+				dispose();
+			}
+		});
+		
+		
+		btnSalir.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnSalir.setBounds(260, 256, 89, 23);
+		contentPane.add(btnSalir);
+		
 		
 		JLabel lblBienvenidoDoctor = new JLabel("");
 		lblBienvenidoDoctor.setFont(new Font("Tahoma", Font.BOLD, 18));
