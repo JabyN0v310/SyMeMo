@@ -3,19 +3,35 @@ package Presentacion;
 import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JLabel;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+
 import java.awt.Color;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
+
+import Controller.DatosLogin;
+import Encapsulamiento.TMedicamento;
+import Negocio.NegocioFrmEditarMedicamento;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class frmEditarMedicamento extends JInternalFrame {
 	private JTextField txtUsuario;
@@ -42,6 +58,12 @@ public class frmEditarMedicamento extends JInternalFrame {
 
 
 	public frmEditarMedicamento() {
+		addInternalFrameListener(new InternalFrameAdapter() {
+			@Override
+			public void internalFrameOpened(InternalFrameEvent evt) {
+				formInternalFrameOpened(evt);
+			}
+		});
 		setIconifiable(true);
 		setMaximizable(true);
 		setClosable(true);
@@ -155,10 +177,20 @@ public class frmEditarMedicamento extends JInternalFrame {
 		panelDatos.add(txtCantidad, gbc_txtCantidad);
 		
 		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				btnEditarActionPerformed(evt);
+			}
+		});
 		btnEditar.setBounds(145, 240, 89, 23);
 		getContentPane().add(btnEditar);
 		
 		JButton btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+			}
+		});
 		btnSalir.setBounds(257, 240, 89, 23);
 		getContentPane().add(btnSalir);
 		
@@ -188,4 +220,63 @@ public class frmEditarMedicamento extends JInternalFrame {
 		scrollPane.setViewportView(tablaDatos);
 
 	}
+	
+	private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+        txtUsuario.setText(new DatosLogin().GetUsuario());
+        
+        List<TMedicamento> listaTMedicamento=NegocioFrmEditarMedicamento.GetByAll();
+        
+        DefaultTableModel modeloTabla=(DefaultTableModel)tablaDatos.getModel();
+        
+        for (TMedicamento tMedicamento : listaTMedicamento) 
+        {
+            Object[] datosFila=
+            {
+            		tMedicamento.getCodMedicamento(),
+            		tMedicamento.getUsuario(),
+            		tMedicamento.getNombre(),
+            		tMedicamento.getPrecioCompra(),
+            		tMedicamento.getPrecioVenta(),
+            		tMedicamento.getFechaVencimiento(),
+            		tMedicamento.getCantidad()
+            };
+            
+            modeloTabla.addRow(datosFila);
+        }
+        
+        tablaDatos.setModel(modeloTabla);
+    }
+	
+	   private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+	        dispose();
+	    }
+	
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {
+        if(tablaDatos.getSelectedRowCount()==0)
+        {
+            JOptionPane.showMessageDialog(this, "Seleccione registro en la tabla");
+            return;
+        }
+        TMedicamento tMedicamento=new TMedicamento();
+        
+        tMedicamento.setCodMedicamento(tablaDatos.getValueAt(tablaDatos.getSelectedRow(), 0).toString());
+        tMedicamento.setUsuario(txtUsuario.getText());
+        tMedicamento.setNombre(txtNombre.getText());
+        tMedicamento.setPrecioCompra(Float.parseFloat(txtPrecioCompra.getText()));
+        tMedicamento.setPrecioVenta(Float.parseFloat(txtPrecioVenta.getText()));
+        tMedicamento.setFechaVencimiento(txtFechaVencimiento.getText());
+        tMedicamento.setCantidad(Integer.parseInt(txtCantidad.getText()));
+        
+        if(NegocioFrmEditarMedicamento.GetByNombre(tMedicamento.getNombre())!=null)
+        {
+            JOptionPane.showMessageDialog(this, "Producto Existente. Cambie el nombre");
+            return;
+        }
+        
+        if(NegocioFrmEditarMedicamento.UpdateAll(tMedicamento)>0)
+        {
+            JOptionPane.showMessageDialog(this, "Producto Modificado Correctamente");
+        }
+	
+    }
 }
