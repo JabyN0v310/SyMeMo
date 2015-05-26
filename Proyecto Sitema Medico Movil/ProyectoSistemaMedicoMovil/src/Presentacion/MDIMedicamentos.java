@@ -86,6 +86,16 @@ public class MDIMedicamentos {
 		mnArchivo.add(mntmConsultar);
 		
 		JMenuItem mntmSalir = new JMenuItem("Salir");
+		mntmSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+			//dispose();
+				salirActionPerformed(evt);
+
+			}
+
+			private void salirActionPerformed(ActionEvent evt) {
+			}
+		});
 		mnArchivo.add(mntmSalir);
 		frame.setVisible(true);
 	}

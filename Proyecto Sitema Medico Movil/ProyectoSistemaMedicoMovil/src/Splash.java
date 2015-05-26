@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JProgressBar;
 
-import com.sun.awt.AWTUtilities;
+//import com.sun.awt.AWTUtilities;
 
 
 public class Splash extends JFrame {
@@ -54,8 +54,8 @@ public class Splash extends JFrame {
 		progressBar.setBounds(164, 450, 200, 50);
 		contentPane.add(progressBar);
 	}
-	public static void transparencia(JFrame frm){
-		AWTUtilities.setWindowOpaque(frm, false);
+	//public static void transparencia(JFrame frm){
+		//AWTUtilities.setWindowOpaque(frm, false);
 		
-	}
+	//}
 }
