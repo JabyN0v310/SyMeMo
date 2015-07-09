@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Sistema Medico Movil</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Archivo</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="abierto">Abierto</string>
+    <string name="cerrado"></string>
+</resources>
